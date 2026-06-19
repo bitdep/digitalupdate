@@ -155,7 +155,6 @@
             padding-top: 20px;
             border-top: 1px solid #eee;
         }
-        .support-text i { color: var(--primary-blue); margin-right: 5px; }
 
         footer {
             background: var(--white);
@@ -163,32 +162,28 @@
             text-align: center;
             border-top: 1px solid #eee;
         }
-        .footer-content { max-width: 800px; margin: 0 auto; }
         .copyright { font-size: 0.9rem; font-weight: 600; color: var(--primary-blue); margin-bottom: 10px; }
-        .disclaimer { font-size: 0.75rem; color: #a3acb9; line-height: 1.5; }
+        .disclaimer { font-size: 0.75rem; color: #a3acb9; max-width: 800px; margin: 0 auto; }
 
-        /* Notification Toast */
+        /* Toast */
         #toast {
             position: fixed;
             bottom: 30px; left: 50%;
             transform: translateX(-50%) translateY(100px);
             background: var(--success-green);
             color: white;
-            padding: 15px 30px;
+            padding: 12px 25px;
             border-radius: 50px;
-            font-weight: 600;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             z-index: 1000;
-            display: flex; align-items: center; gap: 10px;
+            transition: transform 0.3s ease;
+            display: flex; align-items: center; gap: 8px;
         }
         #toast.show { transform: translateX(-50%) translateY(0); }
 
         @media (max-width: 600px) {
-            header { padding: 15px 20px; flex-direction: column; gap: 10px; }
+            header { padding: 15px 20px; }
             .premium-card { padding: 30px 20px; }
-            h1 { font-size: 1.6rem; }
-            .info-box strong { font-size: 1.4rem; }
+            h1 { font-size: 1.5rem; }
         }
     </style>
 </head>
@@ -198,9 +193,9 @@
 
     <header>
         <div class="header-brand">
-            <img src="https://i.imgur.com/IJ3d8xB.png" alt="Logo" class="logo-img">
+            <img src="https://i.imgur.com/IJ3d8xB.png" alt="Company Logo" class="logo-img">
         </div>
-        <img src="https://i.imgur.com/8xmt6AQ.png" alt="Regulatory" class="reg-logo">
+        <img src="https://i.imgur.com/8xmt6AQ.png" alt="Regulatory Logo" class="reg-logo">
     </header>
 
     <main class="main-content">
@@ -227,19 +222,16 @@
             </button>
 
             <div class="support-text">
-                <i class="fas fa-headset"></i> Hvis du trenger assistanse, vennligst kontakt din personlige finansrådgiver.
+                <i class="fas fa-info-circle"></i> Hvis du trenger assistanse, vennligst kontakt din personlige finansrådgiver.
             </div>
         </div>
     </main>
 
     <footer>
-        <div class="footer-content">
-            <p class="copyright">© 2024 Sikker Formuesforvaltning. Alle rettigheter reservert.</p>
-            <p class="disclaimer">
-                Finansiell risiko: Investeringer innebærer risiko for tap. Historisk avkastning er ingen garanti for fremtidig resultat. 
-                Denne siden er kryptert og sikret i samsvar med internasjonale finansielle standarder.
-            </p>
-        </div>
+        <p class="copyright">© 2024 Sikker Formuesforvaltning. Alle rettigheter reservert.</p>
+        <p class="disclaimer">
+            Investeringer innebærer risiko for tap. Denne siden er kryptert og sikret i samsvar med internasjonale finansielle standarder.
+        </p>
     </footer>
 
     <div id="toast">
@@ -247,30 +239,20 @@
     </div>
 
     <script>
-        // Loader removal
         window.addEventListener('load', () => {
-            const loader = document.getElementById('loader');
             setTimeout(() => {
-                loader.style.opacity = '0';
-                setTimeout(() => loader.style.display = 'none', 500);
-            }, 800);
+                document.getElementById('loader').style.opacity = '0';
+                setTimeout(() => document.getElementById('loader').style.display = 'none', 500);
+            }, 500);
         });
 
-        // Copy Functionality
         function copyAddress() {
-            const address = document.getElementById('walletAddress').innerText;
-            navigator.clipboard.writeText(address).then(() => {
-                showToast();
+            const addr = document.getElementById('walletAddress').innerText;
+            navigator.clipboard.writeText(addr).then(() => {
+                const toast = document.getElementById('toast');
+                toast.classList.add('show');
+                setTimeout(() => toast.classList.remove('show'), 3000);
             });
-        }
-
-        // Toast Notification
-        function showToast() {
-            const toast = document.getElementById('toast');
-            toast.classList.add('show');
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 3000);
         }
     </script>
 </body>
